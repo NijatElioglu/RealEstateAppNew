@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using RealEstateApp.Core.Application.DTOs.Account;
 using RealEstateApp.Core.Application.Enums;
+using RealEstateApp.Core.Application.Features.Accounts.Commands.ForgetPasswordUser;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterAdminUser;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterDeveloperUser;
 using RealEstateApp.Core.Application.Features.Accounts.Queries.Authenticate;
@@ -71,6 +72,17 @@ namespace RealEstateApp.Presentation.WebApi.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
+        }
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
+        {
+            var response = await Mediator.Send(command);
+            if (response.HasError)
+            {
+                return BadRequest(response.Error);
+            }
+
+            return Ok(response);
         }
     }
 }
