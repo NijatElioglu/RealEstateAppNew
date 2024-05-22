@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using RealEstateApp.Core.Domain.Common;
 using RealEstateApp.Core.Domain.Entities;
 
@@ -6,7 +7,11 @@ namespace RealEstateApp.Infrastructure.Persistence.Contexts
 {
     public class ApplicationContext : DbContext
     {
-      
+        public const string DEFAULT_SCHEMA = "dbo";
+        public ApplicationContext()
+        {
+                
+        }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
         //public DbSet<Agents>? Agent { get; set; }
@@ -35,6 +40,7 @@ namespace RealEstateApp.Infrastructure.Persistence.Contexts
 
             return base.SaveChangesAsync(cancellationToken);
         }
+  
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,42 +53,12 @@ namespace RealEstateApp.Infrastructure.Persistence.Contexts
             #endregion
 
             #region "primary keys"
-            modelBuilder.Entity<Properties>().HasKey(property => property.Id);
-            modelBuilder.Entity<TypeOfProperties>().HasKey(typeOfProperty => typeOfProperty.Id);
-            modelBuilder.Entity<TypeOfSales>().HasKey(typeOfSale => typeOfSale.Id);
-            modelBuilder.Entity<Improvements>().HasKey(improvement => improvement.Id);
+           
             #endregion
 
             #region relationships
 
-            modelBuilder.Entity<Properties>()
-                 .HasOne(property => property.TypeOfProperty)
-                 .WithMany(typeOfProperty => typeOfProperty.Properties)
-                 .HasForeignKey(property => property.TypeOfPropertyId)
-                 .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<Properties>()
-                 .HasOne(property => property.TypeOfSale)
-                 .WithMany(typeOfSale => typeOfSale.Properties)
-                 .HasForeignKey(property => property.TypeOfPropertyId)
-                 .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Properties>()
-                 .HasMany(property => property.Improvements)
-                 .WithMany(improvement => improvement.Properties)
-                 .UsingEntity<PropertiesImprovements>(
-                    propImp => propImp.HasOne(prop => prop.Improvement)
-                    .WithMany()
-                    .HasForeignKey(prop => prop.ImprovementId),
-                    propImp => propImp.HasOne(prop => prop.Property)
-                    .WithMany()
-                    .HasForeignKey(prop => prop.PropertyId),
-                    propImp =>
-                    {
-                        propImp.Property(prop => prop.CreatedAt).HasDefaultValueSql("GETUTCDATE()");
-                        propImp.HasKey(propImp => new {propImp.PropertyId, propImp.ImprovementId});
-                    }
-                );
+           
             #endregion
 
             #region "property configurations"

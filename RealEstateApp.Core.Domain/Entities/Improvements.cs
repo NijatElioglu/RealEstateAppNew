@@ -12,5 +12,6 @@ namespace RealEstateApp.Core.Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public ICollection<Properties>? Properties { get; set; }
+        public virtual ICollection<PropertiesImprovements> PropertiesImprovements { get; set; }
     }
 }

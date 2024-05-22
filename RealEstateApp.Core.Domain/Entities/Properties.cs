@@ -24,6 +24,8 @@ namespace RealEstateApp.Core.Domain.Entities
         public int TypeOfPropertyId { get; set; }
         public int TypeOfSaleId { get; set; }
         public ICollection<Improvements>? Improvements { get; set; }
+        public virtual ICollection<PropertiesImprovements> PropertiesImprovements { get; set; }
+        public Agents Agents { get; set; }
         public TypeOfProperties? TypeOfProperty { get; set; }
         public TypeOfSales? TypeOfSale { get; set; }
     }
