@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using RealEstateApp.Core.Domain.Common;
 using RealEstateApp.Core.Domain.Entities;
 
@@ -10,7 +9,7 @@ namespace RealEstateApp.Infrastructure.Persistence.Contexts
         public const string DEFAULT_SCHEMA = "dbo";
         public ApplicationContext()
         {
-                
+
         }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
@@ -40,7 +39,7 @@ namespace RealEstateApp.Infrastructure.Persistence.Contexts
 
             return base.SaveChangesAsync(cancellationToken);
         }
-  
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,12 +52,12 @@ namespace RealEstateApp.Infrastructure.Persistence.Contexts
             #endregion
 
             #region "primary keys"
-           
+
             #endregion
 
             #region relationships
 
-           
+
             #endregion
 
             #region "property configurations"

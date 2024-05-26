@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateApp.Core.Application.Features.Properties.Queries.GetAllProperties;
 using RealEstateApp.Core.Application.Features.Properties.Queries.GetPropertiesById;
-using RealEstateApp.Core.Application.Interfaces.Services;
 using RealEstateApp.Core.Application.ViewModels.Properties;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -15,7 +13,7 @@ namespace RealEstateApp.Presentation.WebApi.Controllers.v1
     [SwaggerTag("Consultas Propiedades")]
     public class PropertiesController : BaseApiController
     {
-       
+
         [Authorize(Policy = "RequireOnlyAdminAndDeveloper")]
         [HttpGet]
         [SwaggerOperation(

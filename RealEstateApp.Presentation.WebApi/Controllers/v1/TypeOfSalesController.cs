@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RealEstateApp.Core.Application.Features.TypeOfProperties.Commands.DeleteTypeOfPropertiesById;
 using RealEstateApp.Core.Application.Features.TypeOfSales.Commands.CreateTypeOfSales;
 using RealEstateApp.Core.Application.Features.TypeOfSales.Commands.DeleteTypeOfSales;
 using RealEstateApp.Core.Application.Features.TypeOfSales.Commands.UpdateTypeOfSales;
 using RealEstateApp.Core.Application.Features.TypeOfSales.Queries.GetAllTypeOfSales;
 using RealEstateApp.Core.Application.Features.TypeOfSales.Queries.GetTypeOfSalesById;
-using RealEstateApp.Core.Application.Interfaces.Services;
 using RealEstateApp.Core.Application.ViewModels.TypeOfSales;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;

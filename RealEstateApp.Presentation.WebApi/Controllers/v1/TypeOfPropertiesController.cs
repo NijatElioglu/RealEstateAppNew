@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RealEstateApp.Core.Application.Features.Improvements.Commands.DeleteImprovementsById;
 using RealEstateApp.Core.Application.Features.TypeOfProperties.Commands.CreateTypeOfProperties;
 using RealEstateApp.Core.Application.Features.TypeOfProperties.Commands.DeleteTypeOfPropertiesById;
 using RealEstateApp.Core.Application.Features.TypeOfProperties.Commands.UpdateTypeOfProperties;
 using RealEstateApp.Core.Application.Features.TypeOfProperties.Queries.GetAllTypeOfProperties;
 using RealEstateApp.Core.Application.Features.TypeOfProperties.Queries.GetTypeOfPropertiesById;
-using RealEstateApp.Core.Application.Interfaces.Services;
 using RealEstateApp.Core.Application.ViewModels.TypeOfProperties;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -54,7 +51,7 @@ namespace RealEstateApp.Presentation.WebApi.Controllers.v1
         {
             try
             {
-                var typeOfProperty = await Mediator.Send(new GetTypeOfPropertiesByIdQuery { Id = id});
+                var typeOfProperty = await Mediator.Send(new GetTypeOfPropertiesByIdQuery { Id = id });
                 return Ok(typeOfProperty);
             }
             catch (Exception ex)

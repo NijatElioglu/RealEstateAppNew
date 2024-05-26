@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateApp.Core.Application.Features.Improvements.Commands.CreateImprovements;
 using RealEstateApp.Core.Application.Features.Improvements.Commands.DeleteImprovementsById;
 using RealEstateApp.Core.Application.Features.Improvements.Commands.UpdateImprovements;
 using RealEstateApp.Core.Application.Features.Improvements.Queries.GetAllImprovements;
 using RealEstateApp.Core.Application.Features.Improvements.Queries.GetImprovementsById;
-using RealEstateApp.Core.Application.Interfaces.Services;
 using RealEstateApp.Core.Application.ViewModels.Improvements;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net.Mime;
@@ -19,7 +17,7 @@ namespace RealEstateApp.Presentation.WebApi.Controllers.v1
     [SwaggerTag("Mantenimiento de mejoras")]
     public class ImprovementsController : BaseApiController
     {
-       
+
         [Authorize(Policy = "RequireOnlyAdminAndDeveloper")]
         [HttpGet]
         [SwaggerOperation(

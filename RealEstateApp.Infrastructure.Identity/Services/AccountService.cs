@@ -133,7 +133,7 @@ namespace RealEstateApp.Infrastructure.Identity.Services
 
             await _userManager.AddToRoleAsync(user, typeOfUser.ToString());
 
-            if (typeOfUser.ToString() == Roles.Client.ToString()) 
+            if (typeOfUser.ToString() == Roles.Client.ToString())
             {
                 var verificationUri = await SendVerificationEmailUri(user, origin);
                 await _emailService.SendEmailAsync(new EmailRequest()
@@ -146,6 +146,7 @@ namespace RealEstateApp.Infrastructure.Identity.Services
 
             return response;
         }
+       
         public async Task SignOutAsync()
         {
             await _signInManager.SignOutAsync();
@@ -229,7 +230,7 @@ namespace RealEstateApp.Infrastructure.Identity.Services
 
         public async Task<UpdateAgentUserResponse> UpdateAgentUserByUserNameAsync(UpdateAgentUserRequest request)
         {
-            UpdateAgentUserResponse response = new() { HasError = false};
+            UpdateAgentUserResponse response = new() { HasError = false };
 
             var user = _userManager.FindByNameAsync(request.UserName).Result;
 
@@ -286,7 +287,7 @@ namespace RealEstateApp.Infrastructure.Identity.Services
                 return response;
             }
 
-            if(request.Password != null && request.ConfirmPassword != null && request.CurrentPassword != null)
+            if (request.Password != null && request.ConfirmPassword != null && request.CurrentPassword != null)
             {
                 var change = await _userManager.ChangePasswordAsync(user, request.CurrentPassword, request.Password);
 
@@ -302,7 +303,7 @@ namespace RealEstateApp.Infrastructure.Identity.Services
             return response;
         }
 
-        public async Task<UpdateAgentUserResponse>GetAgentUserByUserNameAsync(string userName)
+        public async Task<UpdateAgentUserResponse> GetAgentUserByUserNameAsync(string userName)
         {
             UpdateAgentUserResponse response = new() { HasError = false };
 
@@ -328,7 +329,7 @@ namespace RealEstateApp.Infrastructure.Identity.Services
             HomeAdminViewModel response = new();
 
             var users = _userManager.Users.ToList();
-            foreach (var user in users) 
+            foreach (var user in users)
             {
                 var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
                 if (user.EmailConfirmed)
@@ -374,10 +375,11 @@ namespace RealEstateApp.Infrastructure.Identity.Services
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user is null) throw new Exception("El usuario no existe.");
-            if(status == false)
+            if (status == false)
             {
                 user.EmailConfirmed = false;
-            } else
+            }
+            else
             {
                 user.EmailConfirmed = true;
             }
@@ -402,6 +404,7 @@ namespace RealEstateApp.Infrastructure.Identity.Services
             }
             return response;
         }
+        
         public async Task<List<AgentsViewModel>> GetAllUsers()
         {
             List<AgentsViewModel> response = new();
@@ -418,7 +421,8 @@ namespace RealEstateApp.Infrastructure.Identity.Services
             }
             return response;
         }
-        public async Task<List<UserViewModel>> GetAllUserViewModels() 
+        
+        public async Task<List<UserViewModel>> GetAllUserViewModels()
         {
             List<UserViewModel> response = new();
 
@@ -429,58 +433,58 @@ namespace RealEstateApp.Infrastructure.Identity.Services
 
                 var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
 
-                    if (rolesList.Contains(Roles.Agent.ToString()))
-                    {
-                        userViewModel.Role = Roles.Agent.ToString();
-                        userViewModel.Id = user.Id;
-                        userViewModel.FirstName = user.FirstName;
-                        userViewModel.LastName = user.LastName;
-                        userViewModel.UserName = user.UserName;
-                        userViewModel.Email = user.Email;
-                        userViewModel.Status = user.EmailConfirmed;
-                        userViewModel.IDCard = user.IDCard;
-                        userViewModel.ImagePath = user.ImagePath;
+                if (rolesList.Contains(Roles.Agent.ToString()))
+                {
+                    userViewModel.Role = Roles.Agent.ToString();
+                    userViewModel.Id = user.Id;
+                    userViewModel.FirstName = user.FirstName;
+                    userViewModel.LastName = user.LastName;
+                    userViewModel.UserName = user.UserName;
+                    userViewModel.Email = user.Email;
+                    userViewModel.Status = user.EmailConfirmed;
+                    userViewModel.IDCard = user.IDCard;
+                    userViewModel.ImagePath = user.ImagePath;
 
-                    }
+                }
 
-                    if (rolesList.Contains(Roles.Client.ToString()))
-                    {
-                        userViewModel.Role = Roles.Client.ToString();
-                        userViewModel.Id = user.Id;
-                        userViewModel.FirstName = user.FirstName;
-                        userViewModel.LastName = user.LastName;
-                        userViewModel.UserName = user.UserName;
-                        userViewModel.Email = user.Email;
-                        userViewModel.Status = user.EmailConfirmed;
-                        userViewModel.IDCard = user.IDCard;
-                        userViewModel.ImagePath = user.ImagePath;
-                    }
+                if (rolesList.Contains(Roles.Client.ToString()))
+                {
+                    userViewModel.Role = Roles.Client.ToString();
+                    userViewModel.Id = user.Id;
+                    userViewModel.FirstName = user.FirstName;
+                    userViewModel.LastName = user.LastName;
+                    userViewModel.UserName = user.UserName;
+                    userViewModel.Email = user.Email;
+                    userViewModel.Status = user.EmailConfirmed;
+                    userViewModel.IDCard = user.IDCard;
+                    userViewModel.ImagePath = user.ImagePath;
+                }
 
-                    if (rolesList.Contains(Roles.Developer.ToString()))
-                    {
-                        userViewModel.Role = Roles.Developer.ToString();
-                        userViewModel.Id = user.Id;
-                        userViewModel.FirstName = user.FirstName;
-                        userViewModel.LastName = user.LastName;
-                        userViewModel.UserName = user.UserName;
-                        userViewModel.Email = user.Email;
-                        userViewModel.Status = user.EmailConfirmed;
-                        userViewModel.IDCard = user.IDCard;
-                        userViewModel.ImagePath = user.ImagePath;
-                    }
+                if (rolesList.Contains(Roles.Developer.ToString()))
+                {
+                    userViewModel.Role = Roles.Developer.ToString();
+                    userViewModel.Id = user.Id;
+                    userViewModel.FirstName = user.FirstName;
+                    userViewModel.LastName = user.LastName;
+                    userViewModel.UserName = user.UserName;
+                    userViewModel.Email = user.Email;
+                    userViewModel.Status = user.EmailConfirmed;
+                    userViewModel.IDCard = user.IDCard;
+                    userViewModel.ImagePath = user.ImagePath;
+                }
 
-                    if (rolesList.Contains(Roles.Admin.ToString()))
-                    {
-                        userViewModel.Role = Roles.Admin.ToString();
-                        userViewModel.Id = user.Id;
-                        userViewModel.FirstName = user.FirstName;
-                        userViewModel.LastName = user.LastName;
-                        userViewModel.UserName = user.UserName;
-                        userViewModel.Email = user.Email;
-                        userViewModel.Status = user.EmailConfirmed;
-                        userViewModel.IDCard = user.IDCard;
-                        userViewModel.ImagePath = user.ImagePath;
-                    }
+                if (rolesList.Contains(Roles.Admin.ToString()))
+                {
+                    userViewModel.Role = Roles.Admin.ToString();
+                    userViewModel.Id = user.Id;
+                    userViewModel.FirstName = user.FirstName;
+                    userViewModel.LastName = user.LastName;
+                    userViewModel.UserName = user.UserName;
+                    userViewModel.Email = user.Email;
+                    userViewModel.Status = user.EmailConfirmed;
+                    userViewModel.IDCard = user.IDCard;
+                    userViewModel.ImagePath = user.ImagePath;
+                }
 
                 response.Add(userViewModel);
 
@@ -570,7 +574,6 @@ namespace RealEstateApp.Infrastructure.Identity.Services
             return agentProperty;
 
         }
-
 
 
         #region "Private Methods"

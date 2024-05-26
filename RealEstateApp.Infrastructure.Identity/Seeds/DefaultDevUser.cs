@@ -2,7 +2,6 @@
 using RealEstateApp.Core.Application.Enums;
 using RealEstateApp.Infrastructure.Identity.Entities;
 
-
 namespace RealEstateApp.Infrastructure.Identity.Seeds
 {
     public static class DefaultDevUser

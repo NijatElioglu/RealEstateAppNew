@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEstateApp.Core.Application.DTOs.Account;
-using RealEstateApp.Core.Application.Enums;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.ForgetPasswordUser;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterAdminUser;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterDeveloperUser;
@@ -54,7 +52,7 @@ namespace RealEstateApp.Presentation.WebApi.Controllers
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }  
+            }
         }
 
         [HttpPost("RegisterDeveloperUser")]
@@ -73,6 +71,7 @@ namespace RealEstateApp.Presentation.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
         {

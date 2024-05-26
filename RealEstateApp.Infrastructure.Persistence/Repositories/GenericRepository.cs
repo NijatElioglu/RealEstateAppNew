@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealEstateApp.Core.Application.Interfaces.Repositories;
 using RealEstateApp.Infrastructure.Persistence.Contexts;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace RealEstateApp.Infrastructure.Persistence.Repository
 {
@@ -23,7 +21,7 @@ namespace RealEstateApp.Infrastructure.Persistence.Repository
             return entity;
         }
 
-        public virtual async Task UpdateAsync(Entity entity,int id)
+        public virtual async Task UpdateAsync(Entity entity, int id)
         {
             var entry = await _dbContext.Set<Entity>().FindAsync(id);
             _dbContext.Entry(entry).CurrentValues.SetValues(entity);

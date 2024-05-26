@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstateApp.Core.Application.Features.Agents.Commands.CreateAgents;
 using RealEstateApp.Core.Application.Features.Agents.Queries.GetAgentsById;

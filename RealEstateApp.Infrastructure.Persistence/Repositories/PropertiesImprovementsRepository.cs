@@ -2,11 +2,6 @@
 using RealEstateApp.Core.Domain.Entities;
 using RealEstateApp.Infrastructure.Persistence.Contexts;
 using RealEstateApp.Infrastructure.Persistence.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateApp.Infrastructure.Persistence.Repositories
 {
@@ -19,5 +14,4 @@ namespace RealEstateApp.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
     }
-  
 }

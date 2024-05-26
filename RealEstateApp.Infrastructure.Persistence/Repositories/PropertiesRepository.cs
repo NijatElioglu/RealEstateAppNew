@@ -3,12 +3,6 @@ using RealEstateApp.Core.Application.Interfaces.Repositories;
 using RealEstateApp.Core.Domain.Entities;
 using RealEstateApp.Infrastructure.Persistence.Contexts;
 using RealEstateApp.Infrastructure.Persistence.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateApp.Infrastructure.Persistence.Repositories
 {
@@ -35,31 +29,26 @@ namespace RealEstateApp.Infrastructure.Persistence.Repositories
                 await _dbContext.PropertiesImprovements.AddAsync(propertiesImprovements);
                 await _dbContext.SaveChangesAsync();
             }
-
-
         }
 
         public async Task UpdateImprovementsToProperties(Properties property)
         {
-
             List<PropertiesImprovements> allPropertiesImprovementsList = await _dbContext.PropertiesImprovements.ToListAsync();
 
             foreach (var item in allPropertiesImprovementsList)
             {
-                if(item.PropertyId == property.Id)
+                if (item.PropertyId == property.Id)
                 {
                     _dbContext.PropertiesImprovements.Remove(item);
 
                 }
             }
 
-
-
             await AddImprovementsToProperties(property);
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteImprovementsToProperties (int id)
+        public async Task DeleteImprovementsToProperties(int id)
         {
             List<PropertiesImprovements> allPropertiesImprovementsList = await _dbContext.PropertiesImprovements.ToListAsync();
 
@@ -75,7 +64,5 @@ namespace RealEstateApp.Infrastructure.Persistence.Repositories
             await _dbContext.SaveChangesAsync();
 
         }
-
-
     }
 }
