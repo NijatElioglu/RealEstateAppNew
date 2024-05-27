@@ -92,10 +92,7 @@ Update-Database -Context IdentityContext
 - Now run the project and the application will run in your default browser. 
 
 <br><br>
-## Developers
-- Frainer Encarnación -> [Github](https://github.com/fraineralex) 
-- Ronal Cadiz -> [Github](https://github.com/Ronaldcdz) 
-- Cristopher Zaiz -> [Github](https://github.com/zaizo01) 
+
 
 
 
