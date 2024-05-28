@@ -15,15 +15,20 @@ namespace RealEstateApp.Infrastructure.Persistence
             #region Contexts
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                services.AddDbContext<ApplicationContext>(options => options.UseInMemoryDatabase("ApplicationDb"));
+                services.AddDbContext<ApplicationContext>(options =>
+                    options.UseInMemoryDatabase("ApplicationDb"));
             }
             else
             {
                 services.AddDbContext<ApplicationContext>(options =>
                 {
-                    options.EnableSensitiveDataLogging();
+                    if (configuration.GetValue<bool>("EnableSensitiveDataLogging"))
+                    {
+                        options.EnableSensitiveDataLogging();
+                    }
+
                     options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                    m => m.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName));
+                        m => m.MigrationsAssembly(typeof(ApplicationContext).Assembly.FullName));
                 });
             }
             #endregion
