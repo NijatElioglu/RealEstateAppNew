@@ -10,6 +10,7 @@ using RealEstateApp.Core.Application.Features.TypeOfProperties.Commands.UpdateTy
 using RealEstateApp.Core.Application.Features.TypeOfSales.Commands.CreateTypeOfSales;
 using RealEstateApp.Core.Application.Features.TypeOfSales.Commands.UpdateTypeOfSales;
 using RealEstateApp.Core.Application.ViewModels.Admin;
+using RealEstateApp.Core.Application.ViewModels.Categories;
 using RealEstateApp.Core.Application.ViewModels.Improvements;
 using RealEstateApp.Core.Application.ViewModels.Properties;
 using RealEstateApp.Core.Application.ViewModels.PropertiesImprovements;
@@ -267,7 +268,23 @@ namespace RealEstateApp.Core.Application.Mappings
 
             CreateMap<AuthenticateUserQuery, AuthenticationRequest>()
                .ReverseMap();
-            
+
+            #endregion
+            #region Categories
+              CreateMap<Categories, CategoriesViewModel>()
+               .ReverseMap()
+               .ForMember(x => x.Created, opt => opt.Ignore())
+               .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+               .ForMember(x => x.LastModified, opt => opt.Ignore())
+               .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
+
+            CreateMap<Categories, CategoriesViewModel>()
+              .ReverseMap()
+              .ForMember(x => x.Created, opt => opt.Ignore())
+              .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+              .ForMember(x => x.LastModified, opt => opt.Ignore())
+              .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
+
             #endregion
         }
     }
