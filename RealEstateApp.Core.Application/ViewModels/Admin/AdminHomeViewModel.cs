@@ -1,5 +1,4 @@
-﻿
-namespace RealEstateApp.Core.Application.ViewModels.Admin
+﻿namespace RealEstateApp.Core.Application.ViewModels.Admin
 {
     public class HomeAdminViewModel
     {
@@ -10,6 +9,5 @@ namespace RealEstateApp.Core.Application.ViewModels.Admin
         public int UnactiveClientsQuantity { get; set; }
         public int ActiveDevsQuantity { get; set; }
         public int UnactiveDevsQuantity { get; set; }
-
     }
 }

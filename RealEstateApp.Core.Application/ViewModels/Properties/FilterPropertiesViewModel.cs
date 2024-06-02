@@ -1,13 +1,4 @@
-﻿using RealEstateApp.Core.Application.ViewModels.Improvements;
-using RealEstateApp.Core.Application.ViewModels.TypeOfProperties;
-using RealEstateApp.Core.Application.ViewModels.TypeOfSales;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RealEstateApp.Core.Application.ViewModels.Properties
+﻿namespace RealEstateApp.Core.Application.ViewModels.Properties
 {
     public class FilterPropertiesViewModel
     {

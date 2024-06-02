@@ -2,11 +2,6 @@
 using RealEstateApp.Core.Application.DTOs.Account;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.ForgetPasswordUser;
 using RealEstateApp.Core.Application.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateApp.Core.Application.Features.Accounts.Queries.Authenticate
 {
@@ -24,7 +19,7 @@ namespace RealEstateApp.Core.Application.Features.Accounts.Queries.Authenticate
             var forgotPasswordRequest = new ForgotPasswordRequest
             {
                 Email = request.Email,
-                Origin=request.Origin,
+                Origin = request.Origin,
             };
 
             return await _accountService.ForgotPasswordAsync(forgotPasswordRequest, request.Origin);

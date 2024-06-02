@@ -1,20 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using RealEstateApp.Core.Application.DTOs.Account;
 using RealEstateApp.Core.Application.Helpers;
 using RealEstateApp.Core.Application.Interfaces.Repositories;
 using RealEstateApp.Core.Application.Interfaces.Services;
-using RealEstateApp.Core.Application.ViewModels.Improvements;
 using RealEstateApp.Core.Application.ViewModels.Properties;
 using RealEstateApp.Core.Application.ViewModels.TypeOfProperties;
 using RealEstateApp.Core.Application.ViewModels.TypeOfSales;
 using RealEstateApp.Core.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateApp.Core.Application.Services
 {
@@ -26,32 +19,29 @@ namespace RealEstateApp.Core.Application.Services
         private readonly AuthenticationResponse userviewModel;
         private readonly IMapper _mapper;
         private readonly IAccountService _accountService;
-        private readonly IImprovementsRepository _improvementsRepository;
         private readonly ITypeOfPropertiesRepository _typeOfPropertiesRepository;
         private readonly ITypeOfSalesRepository _typeOfSalesRepository;
 
-        public PropertiesService(IGenericRepository<Properties> repository, IPropertiesRepository propertiesRepository, IHttpContextAccessor httpContextAccessor, IMapper mapper, IAccountService accountService, IImprovementsRepository improvementsRepository, ITypeOfPropertiesRepository typeOfPropertiesRepository, ITypeOfSalesRepository typeOfSalesRepository) : base(propertiesRepository, mapper)
+        public PropertiesService(IGenericRepository<Properties> repository, IPropertiesRepository propertiesRepository, IHttpContextAccessor httpContextAccessor, IMapper mapper, IAccountService accountService, ITypeOfPropertiesRepository typeOfPropertiesRepository, ITypeOfSalesRepository typeOfSalesRepository) : base(propertiesRepository, mapper)
         {
             _repository = repository;
             _propertiesRepository = propertiesRepository;
             _httpContextAccessor = httpContextAccessor;
             _mapper = mapper;
-            _improvementsRepository = improvementsRepository;
             _typeOfPropertiesRepository = typeOfPropertiesRepository;
             _typeOfSalesRepository = typeOfSalesRepository;
             userviewModel = _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
             _accountService = accountService;
         }
 
-
-        public async Task<SaveAgentProfileViewModel> UpdateAgentProfile (SaveAgentProfileViewModel agentProfileViewModel)
+        public async Task<SaveAgentProfileViewModel> UpdateAgentProfile(SaveAgentProfileViewModel agentProfileViewModel)
         {
             var agentProfileToUpdate = _mapper.Map<UpdateAgentUserRequest>(agentProfileViewModel);
             agentProfileToUpdate.UserName = userviewModel.UserName;
 
 
             var response = await _accountService.UpdateAgentUserByUserNameAsync(agentProfileToUpdate);
-            return  _mapper.Map<SaveAgentProfileViewModel>(response);
+            return _mapper.Map<SaveAgentProfileViewModel>(response);
         }
 
         public async Task<SaveAgentProfileViewModel> GetAgentUserByUserNameAsync(string userName)
@@ -67,8 +57,6 @@ namespace RealEstateApp.Core.Application.Services
             if (exisCode is not null) throw new Exception("El codigo existe.");
 
             // Se cambio la propiedad Improvements ID del savePropertiesViewModel
-            var existImprovement = await _improvementsRepository.GetByIdAsync(savePropertiesViewModel.ImprovementsId.FirstOrDefault());
-            if (existImprovement is null) throw new Exception("La mejora especificada no existe.");
 
             var existTypeOfPropertie = await _typeOfPropertiesRepository.GetByIdAsync(savePropertiesViewModel.TypeOfPropertyId);
             if (existTypeOfPropertie is null) throw new Exception("El tipo de propiedad especificada no existe.");
@@ -76,11 +64,11 @@ namespace RealEstateApp.Core.Application.Services
             var existTypeOfSales = await _typeOfSalesRepository.GetByIdAsync(savePropertiesViewModel.TypeOfSaleId);
             if (existTypeOfSales is null) throw new Exception("El tipo de venta especificada no existe.");
 
-            if(savePropertiesViewModel.Price < 0) throw new Exception("El precio debe de ser mayor a 0.");
-            
-            if(savePropertiesViewModel.NumberOfBathrooms < 0) throw new Exception("El numero de baños debe de ser mayor a 0.");
-            
-            if(savePropertiesViewModel.NumberOfRooms < 0) throw new Exception("El numero de habitaciones debe de ser mayor a 0.");
+            if (savePropertiesViewModel.Price < 0) throw new Exception("El precio debe de ser mayor a 0.");
+
+            if (savePropertiesViewModel.NumberOfBathrooms < 0) throw new Exception("El numero de baños debe de ser mayor a 0.");
+
+            if (savePropertiesViewModel.NumberOfRooms < 0) throw new Exception("El numero de habitaciones debe de ser mayor a 0.");
 
             var propertyEntity = _mapper.Map<Properties>(savePropertiesViewModel);
             await _repository.AddAsync(propertyEntity);
@@ -104,7 +92,7 @@ namespace RealEstateApp.Core.Application.Services
         public async Task<PropertiesViewModel> GetByIdWithData(int id)
         {
             var exists = await _repository.GetByIdAsync(id);
-            if(exists is null) throw new Exception("No existe la propiedad.");
+            if (exists is null) throw new Exception("No existe la propiedad.");
             var result = await _repository.GetAllWithIncludeAsync(new List<string> { "Improvements", "TypeOfProperty", "TypeOfSale" });
             var data = result.FirstOrDefault(x => x.Id == id);
             return _mapper.Map<PropertiesViewModel>(data);
@@ -114,58 +102,9 @@ namespace RealEstateApp.Core.Application.Services
         {
             var properties = await _repository.GetAllAsync();
             var property = properties.FirstOrDefault(x => x.Code == code);
-            if(property is null) throw new Exception("No existe la propiedad.");
+            if (property is null) throw new Exception("No existe la propiedad.");
             var result = await _repository.GetAllWithIncludeAsync(new List<string> { "Improvements", "TypeOfProperty", "TypeOfSale" });
             return _mapper.Map<PropertiesViewModel>(property);
-        }
-
-        public async Task<SavePropertiesViewModel> AddWithImprovementsAsync(SavePropertiesViewModel savePropertiesViewModel)
-        {
-            var property = _mapper.Map<Properties>(savePropertiesViewModel);
-
-            List<Improvements> improvementsList  = new List<Improvements>();
-
-            foreach (var item in savePropertiesViewModel.Improvements)
-            {
-                improvementsList.Add(_mapper.Map<Improvements>(item));
-            }
-
-            property = await _propertiesRepository.AddAsync(property);
-
-            property.Improvements = improvementsList;
-            await _propertiesRepository.AddImprovementsToProperties(property);
-
-
-            var entitySaveViewModel = _mapper.Map<SavePropertiesViewModel>(property);
-
-            List<ImprovementsViewModel> improvementsViewModelsList = new List<ImprovementsViewModel>();
-
-            foreach (var item in property.Improvements)
-            {
-                improvementsViewModelsList.Add(_mapper.Map<ImprovementsViewModel>(item));
-            }
-
-            entitySaveViewModel.Improvements = improvementsViewModelsList;
-
-            return entitySaveViewModel;
-
-        }
-
-
-        public async Task AddImprovementsAsync(SavePropertiesViewModel savePropertiesViewModel)
-        {
-            var property = _mapper.Map<Properties>(savePropertiesViewModel);
-
-            List<Improvements> improvementsList = new List<Improvements>();
-
-            foreach (var item in savePropertiesViewModel.Improvements)
-            {
-                improvementsList.Add(_mapper.Map<Improvements>(item));
-            }
-
-            property.Improvements = improvementsList;
-            await _propertiesRepository.AddImprovementsToProperties(property);
-
         }
 
         public async Task<List<PropertiesViewModel>> GetAllWithInclude()
@@ -177,20 +116,10 @@ namespace RealEstateApp.Core.Application.Services
 
             foreach (var property in propertiesList)
             {
-                List<ImprovementsViewModel> improvementsViewModelsList = new List<ImprovementsViewModel>();
-
-                foreach (var improvement in property.Improvements)
-                {
-                    improvementsViewModelsList.Add(_mapper.Map<ImprovementsViewModel>(improvement));
-                }
-
-                
                 properties = _mapper.Map<PropertiesViewModel>(property);
                 properties.TypeOfSale = _mapper.Map<TypeOfSalesViewModel>(property.TypeOfSale);
                 properties.TypeOfProperty = _mapper.Map<TypeOfPropertiesViewModel>(property.TypeOfProperty);
-                properties.Improvements = improvementsViewModelsList;
                 propertiesViewModelList.Add(properties);
-
             }
 
             return propertiesViewModelList;
@@ -205,23 +134,13 @@ namespace RealEstateApp.Core.Application.Services
 
             foreach (var property in propertiesList)
             {
-                List<ImprovementsViewModel> improvementsViewModelsList = new List<ImprovementsViewModel>();
-
-                foreach (var improvement in property.Improvements)
-                {
-                    improvementsViewModelsList.Add(_mapper.Map<ImprovementsViewModel>(improvement));
-                }
-
-
                 properties = _mapper.Map<PropertiesViewModel>(property);
                 properties.TypeOfSale = _mapper.Map<TypeOfSalesViewModel>(property.TypeOfSale);
                 properties.TypeOfProperty = _mapper.Map<TypeOfPropertiesViewModel>(property.TypeOfProperty);
-                properties.Improvements = improvementsViewModelsList;
                 propertiesViewModelList.Add(properties);
-
             }
 
-            if(filterPropertiesViewModel.Code != null)
+            if (filterPropertiesViewModel.Code != null)
             {
                 propertiesViewModelList = propertiesViewModelList.Where(property => property.Code == filterPropertiesViewModel.Code).ToList();
             }
@@ -245,18 +164,6 @@ namespace RealEstateApp.Core.Application.Services
             {
                 propertiesViewModelList = propertiesViewModelList.Where(property => property.NumberOfRooms == filterPropertiesViewModel.NumberOfRooms).ToList();
             }
-
-            //if (filterPropertiesViewModel.Ids.Count != 0)
-            //{
-            //    foreach(PropertiesViewModel property in propertiesViewModelList)
-            //    {
-            //        if(!filterPropertiesViewModel.Ids.Contains(property.Id))
-            //        {
-            //            propertiesViewModelList.Remove(property);
-            //        }
-
-            //    }
-            //}
 
             if (filterPropertiesViewModel.Ids.Count != 0)
             {
@@ -292,41 +199,15 @@ namespace RealEstateApp.Core.Application.Services
 
             foreach (var property in propertiesList)
             {
-                List<ImprovementsViewModel> improvementsViewModelsList = new List<ImprovementsViewModel>();
-
-                foreach (var improvement in property.Improvements)
-                {
-                    improvementsViewModelsList.Add(_mapper.Map<ImprovementsViewModel>(improvement));
-                }
-
-
                 properties = _mapper.Map<PropertiesViewModel>(property);
                 properties.TypeOfSale = _mapper.Map<TypeOfSalesViewModel>(property.TypeOfSale);
                 properties.TypeOfProperty = _mapper.Map<TypeOfPropertiesViewModel>(property.TypeOfProperty);
-                properties.Improvements = improvementsViewModelsList;
                 propertiesViewModelList.Add(properties);
-
             }
 
             return propertiesViewModelList.Where(prop => prop.AgentId == agentId).ToList();
         }
 
-        public async Task UpdatePropertyWithImprovementsAsync(SavePropertiesViewModel savePropertiesViewModel, int id)
-        {
-            var property = _mapper.Map<Properties>(savePropertiesViewModel);
-
-            List<Improvements> improvementsList = new List<Improvements>();
-
-            foreach (var item in savePropertiesViewModel.Improvements)
-            {
-                improvementsList.Add(_mapper.Map<Improvements>(item));
-            }
-
-            property.Improvements = improvementsList;
-            await _propertiesRepository.UpdateAsync(property, id);
-            await _propertiesRepository.UpdateImprovementsToProperties(property);
-
-        }
 
         public async Task<PropertyDetailsViewModel> GetPropertyDetailsAsync(int propertyId)
         {
@@ -353,11 +234,6 @@ namespace RealEstateApp.Core.Application.Services
             return propertyDetailsViewModel;
         }
 
-        public async Task DeleteImprovementsToProperties(int id)
-        {
-
-           await _propertiesRepository.DeleteImprovementsToProperties(id);
-        }
 
     }
 }

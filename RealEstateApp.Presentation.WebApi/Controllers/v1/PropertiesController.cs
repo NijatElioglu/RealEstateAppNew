@@ -14,12 +14,8 @@ namespace RealEstateApp.Presentation.WebApi.Controllers.v1
     public class PropertiesController : BaseApiController
     {
 
-        [Authorize(Policy = "RequireOnlyAdminAndDeveloper")]
+        [Authorize(Policy = "RequireOnlyAdminAndAgent")]
         [HttpGet]
-        [SwaggerOperation(
-           Summary = "Listado de las propiedades",
-           Description = "Obtiene todas la propiedades."
-        )]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertiesViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -36,12 +32,8 @@ namespace RealEstateApp.Presentation.WebApi.Controllers.v1
             }
         }
 
-        [Authorize(Policy = "RequireOnlyAdminAndDeveloper")]
+        [Authorize(Policy = "RequireOnlyAdminAndAgent")]
         [HttpGet("{id}")]
-        [SwaggerOperation(
-           Summary = "Propiedad por Id",
-           Description = "Obtiene la propiedad utilizando el id como filtro."
-        )]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertiesViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -58,12 +50,8 @@ namespace RealEstateApp.Presentation.WebApi.Controllers.v1
             }
         }
 
-        [Authorize(Policy = "RequireOnlyAdminAndDeveloper")]
+        [Authorize(Policy = "RequireOnlyAdminAndAgent")]
         [HttpGet("{code}")]
-        [SwaggerOperation(
-           Summary = "Propiedad por codigo",
-           Description = "Obtiene la propiedad utilizando el codigo como filtro."
-        )]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertiesViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

@@ -9,18 +9,18 @@ namespace RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterAdmi
 {
     public class RegisterAdminUserCommand : IRequest<RegisterResponse>
     {
-        [Required(ErrorMessage = "El nombre es requerido.")]
+        [Required(ErrorMessage = "This field is required")]
         public string? FirstName { get; set; }
-        [Required(ErrorMessage = "El apellido es requerido.")]
+        [Required(ErrorMessage = "This field is required")]
         public string? LastName { get; set; }
-        [Required(ErrorMessage = "El correo es requerido.")]
+        [Required(ErrorMessage = "This field is required")]
         public string? Email { get; set; }
-        [Required(ErrorMessage = "El nombre de usuario es requerido.")]
+        [Required(ErrorMessage = "This field is required")]
         public string? UserName { get; set; }
-        [Required(ErrorMessage = "La contraseña es requerida.")]
+        [Required(ErrorMessage = "This field is required")]
         public string? Password { get; set; }
-        [Required(ErrorMessage = "La confirmacion de contraseña es requerida.")]
-        [Compare(nameof(Password), ErrorMessage = "Las contraseña deben de ser iguales.")]
+        [Required(ErrorMessage = "Confirmation is required")]
+        [Compare(nameof(Password), ErrorMessage = "Password Mismatch")]
         public string? ConfirmPassword { get; set; }
         public string? Phone { get; set; }
         public string? ImagePath { get; set; }

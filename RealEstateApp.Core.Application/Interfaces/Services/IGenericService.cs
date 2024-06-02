@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RealEstateApp.Core.Application.Interfaces.Services
+﻿namespace RealEstateApp.Core.Application.Interfaces.Services
 {
     public interface IGenericService<SaveViewModel, ViewModel, Model>
            where SaveViewModel : class
@@ -21,5 +15,4 @@ namespace RealEstateApp.Core.Application.Interfaces.Services
 
         Task<List<ViewModel>> GetAllViewModel();
     }
-
 }

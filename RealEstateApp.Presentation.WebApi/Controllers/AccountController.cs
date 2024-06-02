@@ -22,10 +22,6 @@ namespace RealEstateApp.Presentation.WebApi.Controllers
         }
 
         [HttpPost("Authenticate")]
-        [SwaggerOperation(
-           Summary = "Login de usuario",
-           Description = "Obtiene todas la propiedades."
-        )]
         public async Task<IActionResult> AuthenticateAsync(AuthenticationRequest request)
         {
             try
@@ -39,10 +35,6 @@ namespace RealEstateApp.Presentation.WebApi.Controllers
         }
 
         [HttpPost("RegisterAdminUser")]
-        [SwaggerOperation(
-           Summary = "Creacion de usuario con rol administrador",
-           Description = "Recibe los parametros necesarios para crear un usuario con el rol administrador."
-        )]
         public async Task<IActionResult> RegisterAdminAsync(RegisterAdminUserCommand command)
         {
             try
@@ -56,11 +48,7 @@ namespace RealEstateApp.Presentation.WebApi.Controllers
         }
 
         [HttpPost("RegisterDeveloperUser")]
-        [SwaggerOperation(
-           Summary = "Creacion de usuario con rol desarrollador",
-           Description = "Recibe los parametros necesarios para crear un usuario con el rol desarrollador."
-        )]
-        public async Task<IActionResult> RegisterDeveloperAsync(RegisterDeveloperUserCommand command)
+        public async Task<IActionResult> RegisterDeveloperAsync(RegisterSellerUserCommand command)
         {
             try
             {

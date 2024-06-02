@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateApp.Core.Application.ViewModels.Users
 {
@@ -18,11 +13,6 @@ namespace RealEstateApp.Core.Application.ViewModels.Users
         [Required(ErrorMessage = "You must type your Last Name")]
         [DataType(DataType.Text)]
         public string? LastName { get; set; }
-
-        //[Required(ErrorMessage = "You must type your ID Card")]
-        //[DataType(DataType.Text)]
-        //public string? IDCard { get; set; }
-
 
         [Required(ErrorMessage = "You must type the User Name")]
         [DataType(DataType.Text)]

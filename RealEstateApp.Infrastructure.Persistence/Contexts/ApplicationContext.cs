@@ -7,22 +7,20 @@ namespace RealEstateApp.Infrastructure.Persistence.Contexts
     public class ApplicationContext : DbContext
     {
         public const string DEFAULT_SCHEMA = "dbo";
+
         public ApplicationContext()
         {
 
         }
+
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
         //public DbSet<Agents>? Agent { get; set; }
         public DbSet<Properties>? Properties { get; set; }
-        public DbSet<Improvements>? Improvements { get; set; }
         public DbSet<TypeOfProperties>? TypeOfProperties { get; set; }
         public DbSet<TypeOfSales>? TypeOfSales { get; set; }
-        public DbSet<PropertiesImprovements>? PropertiesImprovements { get; set; }
         public DbSet<Categories>? Categories { get; set; }
         public DbSet<Announcement>? Announcements { get; set; }
-       
-
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -44,7 +42,6 @@ namespace RealEstateApp.Infrastructure.Persistence.Contexts
             return base.SaveChangesAsync(cancellationToken);
         }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Fluent API
@@ -52,29 +49,7 @@ namespace RealEstateApp.Infrastructure.Persistence.Contexts
             modelBuilder.Entity<Properties>().ToTable("Properties");
             modelBuilder.Entity<TypeOfProperties>().ToTable("TypeOfProperties");
             modelBuilder.Entity<TypeOfSales>().ToTable("TypeOfSales");
-            modelBuilder.Entity<Improvements>().ToTable("Improvements");
-        
             #endregion
-
-            #region "primary keys"
-
-            #endregion
-
-            #region relationships
-
-
-            #endregion
-
-            #region "property configurations"
-
-            #region Properties
-            modelBuilder.Entity<Properties>()
-                .HasIndex(property => property.Code)
-                .IsUnique();
-            #endregion
-
-            #endregion
-
         }
     }
 }

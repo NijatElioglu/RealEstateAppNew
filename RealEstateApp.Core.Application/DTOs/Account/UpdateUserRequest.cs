@@ -1,8 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
-
-namespace RealEstateApp.Core.Application.DTOs.Account
+﻿namespace RealEstateApp.Core.Application.DTOs.Account
 {
     public class UpdateUserRequest
     {
@@ -19,7 +15,7 @@ namespace RealEstateApp.Core.Application.DTOs.Account
         public string? IDCard { get; set; }
 
         public bool HasError { get; set; }
+       
         public string? Error { get; set; }
-
     }
 }

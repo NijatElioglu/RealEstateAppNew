@@ -133,7 +133,7 @@ namespace RealEstateApp.Infrastructure.Identity.Services
 
             await _userManager.AddToRoleAsync(user, typeOfUser.ToString());
 
-            if (typeOfUser.ToString() == Roles.Client.ToString())
+            if (typeOfUser.ToString() == Roles.Seller.ToString())
             {
                 var verificationUri = await SendVerificationEmailUri(user, origin);
                 await _emailService.SendEmailAsync(new EmailRequest()
@@ -339,12 +339,12 @@ namespace RealEstateApp.Infrastructure.Identity.Services
                         response.ActiveAgentsQuantity += 1;
                     }
 
-                    if (rolesList.Contains(Roles.Client.ToString()))
+                    if (rolesList.Contains(Roles.Seller.ToString()))
                     {
                         response.ActiveClientsQuantity += 1;
                     }
 
-                    if (rolesList.Contains(Roles.Developer.ToString()))
+                    if (rolesList.Contains(Roles.Buyer.ToString()))
                     {
                         response.ActiveDevsQuantity += 1;
                     }
@@ -356,12 +356,12 @@ namespace RealEstateApp.Infrastructure.Identity.Services
                         response.UnactiveAgentsQuantity += 1;
                     }
 
-                    if (rolesList.Contains(Roles.Client.ToString()))
+                    if (rolesList.Contains(Roles.Seller.ToString()))
                     {
                         response.UnactiveClientsQuantity += 1;
                     }
 
-                    if (rolesList.Contains(Roles.Developer.ToString()))
+                    if (rolesList.Contains(Roles.Buyer.ToString()))
                     {
                         response.UnactiveDevsQuantity += 1;
                     }
@@ -447,9 +447,9 @@ namespace RealEstateApp.Infrastructure.Identity.Services
 
                 }
 
-                if (rolesList.Contains(Roles.Client.ToString()))
+                if (rolesList.Contains(Roles.Seller.ToString()))
                 {
-                    userViewModel.Role = Roles.Client.ToString();
+                    userViewModel.Role = Roles.Seller.ToString();
                     userViewModel.Id = user.Id;
                     userViewModel.FirstName = user.FirstName;
                     userViewModel.LastName = user.LastName;
@@ -460,9 +460,9 @@ namespace RealEstateApp.Infrastructure.Identity.Services
                     userViewModel.ImagePath = user.ImagePath;
                 }
 
-                if (rolesList.Contains(Roles.Developer.ToString()))
+                if (rolesList.Contains(Roles.Buyer.ToString()))
                 {
-                    userViewModel.Role = Roles.Developer.ToString();
+                    userViewModel.Role = Roles.Buyer.ToString();
                     userViewModel.Id = user.Id;
                     userViewModel.FirstName = user.FirstName;
                     userViewModel.LastName = user.LastName;

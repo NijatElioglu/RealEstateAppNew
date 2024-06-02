@@ -1,16 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using RealEstateApp.Core.Application.Helpers;
 using RealEstateApp.Core.Application.Interfaces.Repositories;
 using RealEstateApp.Core.Application.Interfaces.Services;
-using RealEstateApp.Core.Domain.Entities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RealEstateApp.Core.Application.Services
 {
-    public class GenericService<SaveViewModel,ViewModel,Model> : IGenericService<SaveViewModel, ViewModel, Model>
+    public class GenericService<SaveViewModel, ViewModel, Model> : IGenericService<SaveViewModel, ViewModel, Model>
          where SaveViewModel : class
          where ViewModel : class
          where Model : class
@@ -20,11 +14,11 @@ namespace RealEstateApp.Core.Application.Services
 
         public GenericService(IGenericRepository<Model> repository, IMapper mapper)
         {
-            _repository = repository;           
+            _repository = repository;
             _mapper = mapper;
         }
 
-        public virtual async Task Update(SaveViewModel vm,int id)
+        public virtual async Task Update(SaveViewModel vm, int id)
         {
             Model entity = _mapper.Map<Model>(vm);
             await _repository.UpdateAsync(entity, id);
@@ -60,7 +54,6 @@ namespace RealEstateApp.Core.Application.Services
             var entityList = await _repository.GetAllAsync();
 
             return _mapper.Map<List<ViewModel>>(entityList);
-        }       
-
+        }
     }
 }

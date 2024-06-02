@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RealEstateApp.Core.Application.DTOs.Account
+﻿namespace RealEstateApp.Core.Application.DTOs.Account
 {
     public class RegisterRequest
     {
@@ -18,6 +12,5 @@ namespace RealEstateApp.Core.Application.DTOs.Account
         public string? IDCard { get; set; }
         public string? ImagePath { get; set; }
         public bool EmailConfirmed { get; set; } = false;
-
     }
 }

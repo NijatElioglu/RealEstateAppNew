@@ -5,7 +5,6 @@ using RealEstateApp.Core.Application.Interfaces.Services;
 using RealEstateApp.Core.Application.ViewModels.Admin;
 using RealEstateApp.Core.Application.ViewModels.Users;
 
-
 namespace RealEstateApp.Core.Application.Services
 {
     public class UserService : IUserService
@@ -76,6 +75,5 @@ namespace RealEstateApp.Core.Application.Services
         {
             return await _accountService.UpdateUserAsync(vm);
         }
-
     }
 }

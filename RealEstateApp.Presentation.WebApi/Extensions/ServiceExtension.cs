@@ -20,12 +20,12 @@ namespace RealEstateApp.Presentation.WebApi.Extensions
                     Description = "This Api will be responsible for overall data distribution",
                     Contact = new OpenApiContact
                     {
-                        Name = "Grupo #5",
-                        Email = "e.zaizortega@gmail.com",
+                        Name = "",
+                        Email = "",
                         Url = new Uri("https://czaiz.com")
                     }
                 });
-                
+
                 string xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 string xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);

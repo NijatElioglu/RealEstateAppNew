@@ -2,22 +2,18 @@
 using MediatR;
 using RealEstateApp.Core.Application.DTOs.Account;
 using RealEstateApp.Core.Application.Interfaces.Services;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateApp.Core.Application.Features.Accounts.Queries.Authenticate
 {
     public class AuthenticateUserQuery : IRequest<AuthenticationResponse>
     {
-        [Required(ErrorMessage = "El correo es requerido.")]
+        [Required(ErrorMessage = "This field is required.")]
         public string Email { get; set; }
-        [Required(ErrorMessage = "El contraseña es requerida.")]
+        [Required(ErrorMessage = "This field is required.")]
         public string Password { get; set; }
     }
+
     public class AuthenticateUserQueryHandler : IRequestHandler<AuthenticateUserQuery, AuthenticationResponse>
     {
         private readonly IAccountService _accountService;
@@ -28,6 +24,7 @@ namespace RealEstateApp.Core.Application.Features.Accounts.Queries.Authenticate
             _accountService = accountService;
             _mapper = mapper;
         }
+
         public async Task<AuthenticationResponse> Handle(AuthenticateUserQuery query, CancellationToken cancellationToken)
         {
             var data = _mapper.Map<AuthenticationRequest>(query);
@@ -37,7 +34,7 @@ namespace RealEstateApp.Core.Application.Features.Accounts.Queries.Authenticate
             {
                 foreach (var rol in response.Roles)
                 {
-                    if (rol == "Agent" || rol == "Client") throw new Exception("No tiene permiso para usar el web api.");
+                    if (rol == "Agent" || rol == "Seller") throw new Exception("Permission denied.");
                 }
             }
             return response;

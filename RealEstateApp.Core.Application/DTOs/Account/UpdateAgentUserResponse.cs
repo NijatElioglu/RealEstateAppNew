@@ -1,11 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RealEstateApp.Core.Application.DTOs.Account
+﻿namespace RealEstateApp.Core.Application.DTOs.Account
 {
     public class UpdateAgentUserResponse
     {
@@ -16,8 +9,5 @@ namespace RealEstateApp.Core.Application.DTOs.Account
 
         public bool HasError { get; set; }
         public string? Error { get; set; }
-
-
-
     }
 }

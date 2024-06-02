@@ -27,7 +27,7 @@ builder.Services.AddApplicationLayer();
 builder.Services.AddApiVersioningExtension();
 builder.Services.AddAuthorization(opt =>
 {
-    opt.AddPolicy("RequireOnlyAdminAndDeveloper", policy => policy.RequireRole("Admin", "Developer"));
+    opt.AddPolicy("RequireOnlyAdminAndAgent", policy => policy.RequireRole("Admin", "Agent"));
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

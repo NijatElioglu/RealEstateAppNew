@@ -2,15 +2,11 @@
 using RealEstateApp.Core.Domain.Entities;
 using RealEstateApp.Infrastructure.Persistence.Contexts;
 using RealEstateApp.Infrastructure.Persistence.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace RealEstateApp.Infrastructure.Persistence.Repositories
 {
-    public class CategoriesRepository : GenericRepository<Categories>,ICategoriesRepository
+    public class CategoriesRepository : GenericRepository<Categories>, ICategoriesRepository
     {
         private readonly ApplicationContext _dbContext;
 

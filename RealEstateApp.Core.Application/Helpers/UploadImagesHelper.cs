@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RealEstateApp.Core.Application.Helpers
 {
@@ -11,8 +6,6 @@ namespace RealEstateApp.Core.Application.Helpers
     {
         public static string UploadUserImage(IFormFile file, string username)
         {
-
-
             //Get directory path
             string basePath = $"/Images/Users/{username}";
             string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{basePath}");
@@ -34,8 +27,6 @@ namespace RealEstateApp.Core.Application.Helpers
             {
                 file.CopyTo(stream);
             }
-
-
 
             return $"{basePath}/{fileName}";
         }
@@ -149,7 +140,5 @@ namespace RealEstateApp.Core.Application.Helpers
                 Directory.Delete(path);
             }
         }
-
-
     }
 }
