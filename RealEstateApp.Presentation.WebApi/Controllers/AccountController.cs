@@ -2,6 +2,7 @@
 using RealEstateApp.Core.Application.DTOs.Account;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.ForgetPasswordUser;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterAdminUser;
+using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterBuyerUser;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterDeveloperUser;
 using RealEstateApp.Core.Application.Features.Accounts.Queries.Authenticate;
 using RealEstateApp.Core.Application.Interfaces.Services;
@@ -59,7 +60,19 @@ namespace RealEstateApp.Presentation.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
-        
+        [HttpPost("RegisterBuyerUser")]
+        public async Task<IActionResult> RegisterBuyerUser(RegisterBuyerUserCommand command)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(command));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
         {

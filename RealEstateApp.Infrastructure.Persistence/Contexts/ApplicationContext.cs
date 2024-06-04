@@ -1,55 +1,55 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RealEstateApp.Core.Domain.Common;
-using RealEstateApp.Core.Domain.Entities;
+﻿    using Microsoft.EntityFrameworkCore;
+    using RealEstateApp.Core.Domain.Common;
+    using RealEstateApp.Core.Domain.Entities;
 
-namespace RealEstateApp.Infrastructure.Persistence.Contexts
-{
-    public class ApplicationContext : DbContext
+    namespace RealEstateApp.Infrastructure.Persistence.Contexts
     {
-        public const string DEFAULT_SCHEMA = "dbo";
-
-        public ApplicationContext()
+        public class ApplicationContext : DbContext
         {
+            public const string DEFAULT_SCHEMA = "dbo";
 
-        }
-
-        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
-
-        //public DbSet<Agents>? Agent { get; set; }
-        public DbSet<Properties>? Properties { get; set; }
-        public DbSet<TypeOfProperties>? TypeOfProperties { get; set; }
-        public DbSet<TypeOfSales>? TypeOfSales { get; set; }
-        public DbSet<Categories>? Categories { get; set; }
-        public DbSet<Announcement>? Announcements { get; set; }
-
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
-        {
-            foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
+            public ApplicationContext()
             {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.Entity.Created = DateTime.Now;
-                        entry.Entity.CreatedBy = "DefaultAppUser";
-                        break;
-                    case EntityState.Modified:
-                        entry.Entity.LastModified = DateTime.Now;
-                        entry.Entity.LastModifiedBy = "DefaultAppUser";
-                        break;
-                }
+
             }
 
-            return base.SaveChangesAsync(cancellationToken);
-        }
+            public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //Fluent API
-            #region tables
-            modelBuilder.Entity<Properties>().ToTable("Properties");
-            modelBuilder.Entity<TypeOfProperties>().ToTable("TypeOfProperties");
-            modelBuilder.Entity<TypeOfSales>().ToTable("TypeOfSales");
-            #endregion
+            //public DbSet<Agents>? Agent { get; set; }
+            public DbSet<Properties>? Properties { get; set; }
+            public DbSet<TypeOfProperties>? TypeOfProperties { get; set; }
+            public DbSet<TypeOfSales>? TypeOfSales { get; set; }
+            public DbSet<Categories>? Categories { get; set; }
+            public DbSet<Announcement>? Announcements { get; set; }
+
+            public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+            {
+                foreach (var entry in ChangeTracker.Entries<AuditableBaseEntity>())
+                {
+                    switch (entry.State)
+                    {
+                        case EntityState.Added:
+                            entry.Entity.Created = DateTime.Now;
+                            entry.Entity.CreatedBy = "DefaultAppUser";
+                            break;
+                        case EntityState.Modified:
+                            entry.Entity.LastModified = DateTime.Now;
+                            entry.Entity.LastModifiedBy = "DefaultAppUser";
+                            break;
+                    }
+                }
+
+                return base.SaveChangesAsync(cancellationToken);
+            }
+
+            protected override void OnModelCreating(ModelBuilder modelBuilder)
+            {
+                //Fluent API
+                #region tables
+                modelBuilder.Entity<Properties>().ToTable("Properties");
+                modelBuilder.Entity<TypeOfProperties>().ToTable("TypeOfProperties");
+                modelBuilder.Entity<TypeOfSales>().ToTable("TypeOfSales");
+                #endregion
+            }
         }
     }
-}

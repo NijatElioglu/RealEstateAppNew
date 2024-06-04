@@ -201,21 +201,23 @@ namespace RealEstateApp.Core.Application.Mappings
                .ReverseMap();
 
             #endregion
-           
-            #region Categories
-              CreateMap<Categories, CategoriesViewModel>()
-               .ReverseMap()
-               .ForMember(x => x.Created, opt => opt.Ignore())
-               .ForMember(x => x.CreatedBy, opt => opt.Ignore())
-               .ForMember(x => x.LastModified, opt => opt.Ignore())
-               .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
 
+            #region Categories
             CreateMap<Categories, CategoriesViewModel>()
               .ReverseMap()
               .ForMember(x => x.Created, opt => opt.Ignore())
               .ForMember(x => x.CreatedBy, opt => opt.Ignore())
               .ForMember(x => x.LastModified, opt => opt.Ignore())
               .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
+
+            CreateMap<Categories, SaveCategoriesViewModel>()
+              .ReverseMap()
+              .ForMember(x => x.Created, opt => opt.Ignore())
+              .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+              .ForMember(x => x.LastModified, opt => opt.Ignore())
+              .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
+
+
 
             #endregion
         }
