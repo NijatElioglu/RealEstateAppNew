@@ -72,6 +72,18 @@ namespace RealEstateApp.Presentation.WebApi.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        [HttpPost("RegisterSellerUser")]
+        public async Task<IActionResult> RegisterSellerAsync(RegisterSellerUserCommand command)
+        {
+            try
+            {
+                return Ok(await Mediator.Send(command));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
 
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordCommand command)
