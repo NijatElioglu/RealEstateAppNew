@@ -3,6 +3,7 @@ using RealEstateApp.Core.Application.DTOs.Account;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterAdminUser;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterDeveloperUser;
 using RealEstateApp.Core.Application.Features.Accounts.Queries.Authenticate;
+using RealEstateApp.Core.Application.Features.Category.CreateCategory;
 using RealEstateApp.Core.Application.Features.TypeOfProperties.Commands.CreateTypeOfProperties;
 using RealEstateApp.Core.Application.Features.TypeOfProperties.Commands.UpdateTypeOfProperties;
 using RealEstateApp.Core.Application.Features.TypeOfSales.Commands.CreateTypeOfSales;
@@ -17,7 +18,7 @@ using RealEstateApp.Core.Domain.Entities;
 
 namespace RealEstateApp.Core.Application.Mappings
 {
-    public class GeneralProfile: Profile
+    public class GeneralProfile : Profile
     {
         public GeneralProfile()
         {
@@ -194,8 +195,8 @@ namespace RealEstateApp.Core.Application.Mappings
             CreateMap<RegisterAdminUserCommand, RegisterRequest>()
                 .ReverseMap();
 
-             CreateMap<RegisterSellerUserCommand, RegisterRequest>()
-                .ReverseMap();
+            CreateMap<RegisterSellerUserCommand, RegisterRequest>()
+               .ReverseMap();
 
             CreateMap<AuthenticateUserQuery, AuthenticationRequest>()
                .ReverseMap();
@@ -217,8 +218,11 @@ namespace RealEstateApp.Core.Application.Mappings
               .ForMember(x => x.LastModified, opt => opt.Ignore())
               .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
 
-
-
+            CreateMap<CreateCategoryCommand, Categories>()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.LastModified, opt => opt.Ignore())
+                .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
             #endregion
         }
     }

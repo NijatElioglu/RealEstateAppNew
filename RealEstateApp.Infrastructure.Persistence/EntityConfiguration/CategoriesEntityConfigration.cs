@@ -5,13 +5,12 @@ using RealEstateApp.Infrastructure.Persistence.Contexts;
 
 namespace RealEstateApp.Infrastructure.Persistence.EntityConfiguration
 {
-    public class CategoriesEntityConfigration:BaseEntityConfiguration<Categories>
+    public class CategoriesEntityConfigration : BaseEntityConfiguration<Categories>
     {
         public override void Configure(EntityTypeBuilder<Categories> builder)
         {
             base.Configure(builder);
             builder.ToTable("Categories", ApplicationContext.DEFAULT_SCHEMA);
-
         }
     }
 }

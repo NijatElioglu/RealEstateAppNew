@@ -27,7 +27,6 @@ namespace RealEstateApp.Infrastructure.Identity.Services
         private readonly JWTSettings _jwtSettings;
         private readonly IEmailService _emailService;
 
-
         public AccountService(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IOptions<JWTSettings> jwtSettings,
@@ -371,6 +370,7 @@ namespace RealEstateApp.Infrastructure.Identity.Services
 
             return response;
         }
+       
         public async Task<bool> ChangesStatusUser(string id, bool status)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -654,7 +654,6 @@ namespace RealEstateApp.Infrastructure.Identity.Services
 
             return verificationUri;
         }
-
 
         #endregion
     }

@@ -1,10 +1,5 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using RealEstateApp.Core.Application.Enums;
+﻿using Microsoft.AspNetCore.Mvc;
 using RealEstateApp.Core.Application.Features.Category.CreateCategory;
-using RealEstateApp.Core.Application.Features.TypeOfProperties.Commands.CreateTypeOfProperties;
 
 namespace RealEstateApp.Presentation.WebApi.Controllers.v1
 {
@@ -30,7 +25,5 @@ namespace RealEstateApp.Presentation.WebApi.Controllers.v1
                 throw;
             }
         }
-
-
-        }
+    }
 }
