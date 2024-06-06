@@ -111,6 +111,7 @@ namespace RealEstateApp.Infrastructure.Persistence
             services.AddTransient<ITypeOfSalesRepository, TypeOfSalesRepository>();
             services.AddTransient<IPropertiesRepository, PropertiesRepository>();
             services.AddTransient<ICategoriesRepository, CategoriesRepository>();
+            services.AddTransient<IAnnouncementRepository, AnnouncementRepository>();
             services.AddTransient<IAccountService, AccountService>();
             #endregion
         }

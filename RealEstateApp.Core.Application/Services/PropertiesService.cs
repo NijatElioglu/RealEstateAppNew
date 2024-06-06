@@ -56,7 +56,6 @@ namespace RealEstateApp.Core.Application.Services
             var exisCode = records.FirstOrDefault(x => x.Code == savePropertiesViewModel.Code);
             if (exisCode is not null) throw new Exception("El codigo existe.");
 
-            // Se cambio la propiedad Improvements ID del savePropertiesViewModel
 
             var existTypeOfPropertie = await _typeOfPropertiesRepository.GetByIdAsync(savePropertiesViewModel.TypeOfPropertyId);
             if (existTypeOfPropertie is null) throw new Exception("El tipo de propiedad especificada no existe.");

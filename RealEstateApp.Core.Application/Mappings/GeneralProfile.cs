@@ -1,14 +1,21 @@
 ﻿using AutoMapper;
 using RealEstateApp.Core.Application.DTOs.Account;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterAdminUser;
+using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterAgentUser;
+using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterBuyerUser;
 using RealEstateApp.Core.Application.Features.Accounts.Commands.RegisterDeveloperUser;
 using RealEstateApp.Core.Application.Features.Accounts.Queries.Authenticate;
-using RealEstateApp.Core.Application.Features.Category.CreateCategory;
+using RealEstateApp.Core.Application.Features.Announcement.Commands.CreateAnnouncement;
+using RealEstateApp.Core.Application.Features.Announcement.Commands.UpdateAnnouncement;
+using RealEstateApp.Core.Application.Features.Category.Commands.CreateCategory;
+using RealEstateApp.Core.Application.Features.Category.Commands.UpdateCategory;
+using RealEstateApp.Core.Application.Features.Properties.Commands.CreateProperties;
 using RealEstateApp.Core.Application.Features.TypeOfProperties.Commands.CreateTypeOfProperties;
 using RealEstateApp.Core.Application.Features.TypeOfProperties.Commands.UpdateTypeOfProperties;
 using RealEstateApp.Core.Application.Features.TypeOfSales.Commands.CreateTypeOfSales;
 using RealEstateApp.Core.Application.Features.TypeOfSales.Commands.UpdateTypeOfSales;
 using RealEstateApp.Core.Application.ViewModels.Admin;
+using RealEstateApp.Core.Application.ViewModels.Announement;
 using RealEstateApp.Core.Application.ViewModels.Categories;
 using RealEstateApp.Core.Application.ViewModels.Properties;
 using RealEstateApp.Core.Application.ViewModels.TypeOfProperties;
@@ -149,6 +156,18 @@ namespace RealEstateApp.Core.Application.Mappings
             #endregion
 
             #region CQRS
+            CreateMap<CreatePropertiesCommand, Properties>()
+          .ForMember(x => x.Created, opt => opt.Ignore())
+          .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+          .ForMember(x => x.LastModified, opt => opt.Ignore())
+          .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
+          .ReverseMap();
+            CreateMap<CreateAnnouncementCommand, Announcement>()
+          .ForMember(x => x.Created, opt => opt.Ignore())
+          .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+          .ForMember(x => x.LastModified, opt => opt.Ignore())
+          .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
+          .ReverseMap();
 
             CreateMap<CreateTypeOfPropertiesCommand, TypeOfProperties>()
             .ForMember(x => x.Created, opt => opt.Ignore())
@@ -156,6 +175,7 @@ namespace RealEstateApp.Core.Application.Mappings
             .ForMember(x => x.LastModified, opt => opt.Ignore())
             .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
             .ReverseMap();
+
 
             CreateMap<CreateTypeOfSalesCommand, TypeOfSales>()
             .ForMember(x => x.Created, opt => opt.Ignore())
@@ -178,6 +198,8 @@ namespace RealEstateApp.Core.Application.Mappings
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore())
                 .ReverseMap();
 
+
+
             CreateMap<TypeOfSalesUpdateCommand, TypeOfSales>()
                 .ForMember(x => x.Created, opt => opt.Ignore())
                 .ForMember(x => x.LastModified, opt => opt.Ignore())
@@ -191,12 +213,55 @@ namespace RealEstateApp.Core.Application.Mappings
                 .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore())
                 .ReverseMap();
+            CreateMap<UpdateCategoryCommand, Categories>()
+               .ForMember(x => x.Created, opt => opt.Ignore())
+               .ForMember(x => x.LastModified, opt => opt.Ignore())
+               .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
+               .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+               .ReverseMap();
+
+            CreateMap<UpdateCategoryResponse, Categories>()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.LastModified, opt => opt.Ignore())
+                .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ReverseMap(); 
+            CreateMap<UpdateAnnouncementCommand, Announcement>()
+               .ForMember(x => x.Created, opt => opt.Ignore())
+               .ForMember(x => x.LastModified, opt => opt.Ignore())
+               .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
+               .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+               .ReverseMap();
+
+            CreateMap<UpdateAnnouncementResponse, Announcement>()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.LastModified, opt => opt.Ignore())
+                .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ReverseMap();
+            CreateMap<UpdateTypeOfPropertiesCommand, Properties>()
+           .ForMember(x => x.Created, opt => opt.Ignore())
+           .ForMember(x => x.LastModified, opt => opt.Ignore())
+           .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
+           .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+           .ReverseMap();
+
+            CreateMap<UpdateTypeOfPropertiesResponse, Properties>()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.LastModified, opt => opt.Ignore())
+                .ForMember(x => x.LastModifiedBy, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ReverseMap();
 
             CreateMap<RegisterAdminUserCommand, RegisterRequest>()
+                .ReverseMap();
+            CreateMap<RegisterBuyerUserCommand, RegisterRequest>()
                 .ReverseMap();
 
             CreateMap<RegisterSellerUserCommand, RegisterRequest>()
                .ReverseMap();
+            CreateMap<RegisterAgentUserCommand, RegisterRequest>()
+         .ReverseMap();
 
             CreateMap<AuthenticateUserQuery, AuthenticationRequest>()
                .ReverseMap();
@@ -219,6 +284,29 @@ namespace RealEstateApp.Core.Application.Mappings
               .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
 
             CreateMap<CreateCategoryCommand, Categories>()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.LastModified, opt => opt.Ignore())
+                .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
+            #endregion
+
+
+            #region Announcement
+            CreateMap<Announcement, AnnouncementViewModel>()
+              .ReverseMap()
+              .ForMember(x => x.Created, opt => opt.Ignore())
+              .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+              .ForMember(x => x.LastModified, opt => opt.Ignore())
+              .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
+
+            CreateMap<Announcement, SaveAnnouncementViewModel>()
+              .ReverseMap()
+              .ForMember(x => x.Created, opt => opt.Ignore())
+              .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+              .ForMember(x => x.LastModified, opt => opt.Ignore())
+              .ForMember(x => x.LastModifiedBy, opt => opt.Ignore());
+
+            CreateMap<CreateAnnouncementCommand, Announcement>()
                 .ForMember(x => x.Created, opt => opt.Ignore())
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore())
                 .ForMember(x => x.LastModified, opt => opt.Ignore())

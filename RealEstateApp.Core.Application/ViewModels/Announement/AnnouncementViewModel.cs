@@ -1,10 +1,14 @@
-﻿using RealEstateApp.Core.Domain.Common;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace RealEstateApp.Core.Domain.Entities
+namespace RealEstateApp.Core.Application.ViewModels.Announement
 {
-    public class Announcement : AuditableBaseEntity
+    public class AnnouncementViewModel
     {
-       
+        public int CategoriesId { get; set; }
         public double Price { get; set; }
         public bool Availability { get; set; }
         public bool NeighborhoodNoise { get; set; }
@@ -16,12 +20,5 @@ namespace RealEstateApp.Core.Domain.Entities
         public int RoomCount { get; set; }
         public int BathCount { get; set; }
         public DateTime? BuildingCreatedDate { get; set; }
-
-        #region Relations
-        public Categories Categories { get; set; }
-        public int CategoriesId { get; set; }
-        public ICollection<Properties> Properties { get; set; }
-
-        #endregion
     }
 }

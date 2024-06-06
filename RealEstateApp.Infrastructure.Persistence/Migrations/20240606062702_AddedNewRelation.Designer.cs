@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RealEstateApp.Infrastructure.Persistence.Contexts;
 
@@ -11,9 +12,10 @@ using RealEstateApp.Infrastructure.Persistence.Contexts;
 namespace RealEstateApp.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240606062702_AddedNewRelation")]
+    partial class AddedNewRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -156,6 +158,49 @@ namespace RealEstateApp.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", "Identity");
                 });
 
+            modelBuilder.Entity("RealEstateApp.Core.Domain.Entities.Agents", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime?>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NumberOfProperties")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfileImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Agents", "Identity");
+                });
+
             modelBuilder.Entity("RealEstateApp.Core.Domain.Entities.Announcement", b =>
                 {
                     b.Property<int>("Id")
@@ -176,7 +221,7 @@ namespace RealEstateApp.Infrastructure.Persistence.Migrations
                     b.Property<int>("BedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("BuildingCreatedDate")
+                    b.Property<DateTime>("BuildingCreatedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("CategoriesId")
@@ -256,6 +301,13 @@ namespace RealEstateApp.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AgentId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("AgentsId")
+                        .HasColumnType("int");
+
                     b.Property<int>("AnnouncementId")
                         .HasColumnType("int");
 
@@ -310,6 +362,8 @@ namespace RealEstateApp.Infrastructure.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AgentsId");
 
                     b.HasIndex("AnnouncementId");
 
@@ -529,6 +583,12 @@ namespace RealEstateApp.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("RealEstateApp.Core.Domain.Entities.Properties", b =>
                 {
+                    b.HasOne("RealEstateApp.Core.Domain.Entities.Agents", "Agents")
+                        .WithMany("Properties")
+                        .HasForeignKey("AgentsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("RealEstateApp.Core.Domain.Entities.Announcement", "Announcement")
                         .WithMany("Properties")
                         .HasForeignKey("AnnouncementId")
@@ -547,11 +607,18 @@ namespace RealEstateApp.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Agents");
+
                     b.Navigation("Announcement");
 
                     b.Navigation("TypeOfProperty");
 
                     b.Navigation("TypeOfSale");
+                });
+
+            modelBuilder.Entity("RealEstateApp.Core.Domain.Entities.Agents", b =>
+                {
+                    b.Navigation("Properties");
                 });
 
             modelBuilder.Entity("RealEstateApp.Core.Domain.Entities.Announcement", b =>

@@ -22,10 +22,7 @@ namespace RealEstateApp.Infrastructure.Persistence.EntityConfiguration
                .HasForeignKey(i => i.TypeOfSaleId)
                .OnDelete(DeleteBehavior.Restrict);
 
-            builder.HasOne(i => i.Agents)
-                     .WithMany(i => i.Properties)
-                     .HasForeignKey(i => i.AgentId)
-                     .OnDelete(DeleteBehavior.Restrict);
+           
 
         }
     }

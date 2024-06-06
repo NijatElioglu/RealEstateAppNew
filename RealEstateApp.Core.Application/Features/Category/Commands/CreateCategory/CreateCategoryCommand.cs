@@ -4,7 +4,7 @@ using RealEstateApp.Core.Application.Interfaces.Repositories;
 using RealEstateApp.Core.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace RealEstateApp.Core.Application.Features.Category.CreateCategory
+namespace RealEstateApp.Core.Application.Features.Category.Commands.CreateCategory
 {
     public class CreateCategoryCommand : IRequest<int>
     {

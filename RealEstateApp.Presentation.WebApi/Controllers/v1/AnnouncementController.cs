@@ -1,34 +1,31 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RealEstateApp.Core.Application.Features.Announcement.Commands.CreateAnnouncement;
 using RealEstateApp.Core.Application.Features.Announcement.Commands.UpdateAnnouncement;
-using RealEstateApp.Core.Application.Features.Properties.Commands.CreateProperties;
-using RealEstateApp.Core.Application.Features.Properties.Commands.UpdateProperties;
-using RealEstateApp.Core.Application.Features.Properties.Queries.GetAllProperties;
-using RealEstateApp.Core.Application.Features.Properties.Queries.GetPropertiesById;
-using RealEstateApp.Core.Application.ViewModels.Properties;
+using RealEstateApp.Core.Application.Features.Announcement.Queries.GetAllAnnouncement;
+using RealEstateApp.Core.Application.Features.Announcement.Queries.GetAnnouncementById;
+using RealEstateApp.Core.Application.Features.TypeOfProperties.Queries.GetAllTypeOfProperties;
+using RealEstateApp.Core.Application.ViewModels.Announement;
 using RealEstateApp.Core.Application.ViewModels.TypeOfProperties;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace RealEstateApp.Presentation.WebApi.Controllers.v1
 {
-    [ApiVersion("1.0")]
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [ApiController]
-    [SwaggerTag("Consultas Propiedades")]
-    public class PropertiesController : BaseApiController
+    public class AnnouncementController : BaseApiController
     {
 
-        [Authorize(Policy = "RequireOnlyAdminAndAgent")]
+
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertiesViewModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AnnouncementViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> List()
         {
             try
             {
-                var properties = await Mediator.Send(new GetAllPropertiesQuery());
-                return Ok(properties);
+                var Announcements = await Mediator.Send(new GetAllAnnouncementQuery());
+                return Ok(Announcements);
             }
             catch (Exception ex)
             {
@@ -36,16 +33,15 @@ namespace RealEstateApp.Presentation.WebApi.Controllers.v1
             }
         }
 
-        [Authorize(Policy = "RequireOnlyAdminAndAgent")]
         [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertiesViewModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(AnnouncementViewModel))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(int id)
         {
             try
             {
-                var property = await Mediator.Send(new GetPropertiesByIdQuery { Id = id });
+                var property = await Mediator.Send(new GetAnnouncementByIdQuery{ Id = id });
                 return Ok(property);
             }
             catch (Exception ex)
@@ -54,28 +50,12 @@ namespace RealEstateApp.Presentation.WebApi.Controllers.v1
             }
         }
 
-        [Authorize(Policy = "RequireOnlyAdminAndAgent")]
-        [HttpGet("{code}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PropertiesViewModel))]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetByCode(string code)
-        {
-            try
-            {
-                var property = await Mediator.Send(new GetPropertiesByCodeQuery { Code = code });
-                return Ok(property);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create(CreatePropertiesCommand command)
+
+        public async Task<IActionResult> Create(CreateAnnouncementCommand command)
         {
             try
             {
@@ -89,10 +69,10 @@ namespace RealEstateApp.Presentation.WebApi.Controllers.v1
             }
         }
         [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SavePropertiesViewModel))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SaveTypeOfPropertiesViewModel))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update(int id, UpdatePropertiesCommand command)
+        public async Task<IActionResult> Update(int id, UpdateAnnouncementCommand command)
         {
             try
             {

@@ -5,7 +5,7 @@ namespace RealEstateApp.Core.Domain.Entities
     public class Properties : AuditableBaseEntity
     {
         public string Code { get; set; }
-        public string AgentId { get; set; }
+       
         public decimal Price { get; set; }
         public int LandSize { get; set; }
         public int NumberOfRooms { get; set; }
@@ -17,8 +17,10 @@ namespace RealEstateApp.Core.Domain.Entities
         public string? ImagePathFour { get; set; }
         public int TypeOfPropertyId { get; set; }
         public int TypeOfSaleId { get; set; }
-        public Agents Agents { get; set; }
+        public int AnnouncementId { get; set; }
+        
         public TypeOfProperties? TypeOfProperty { get; set; }
         public TypeOfSales? TypeOfSale { get; set; }
+        public Announcement? Announcement { get; set; }
     }
 }

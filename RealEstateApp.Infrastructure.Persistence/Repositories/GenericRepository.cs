@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealEstateApp.Core.Application.Interfaces.Repositories;
 using RealEstateApp.Infrastructure.Persistence.Contexts;
+using System.Text;
 
 namespace RealEstateApp.Infrastructure.Persistence.Repository
 {
@@ -17,7 +18,20 @@ namespace RealEstateApp.Infrastructure.Persistence.Repository
         public virtual async Task<Entity> AddAsync(Entity entity)
         {
             await _dbContext.Set<Entity>().AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+
+            
+
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                var exceptionmassage = new StringBuilder();
+                exceptionmassage.AppendLine($"Error:{ex.Message}");
+                throw;
+            }
+
             return entity;
         }
 
