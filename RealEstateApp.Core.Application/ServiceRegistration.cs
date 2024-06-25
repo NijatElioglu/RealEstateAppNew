@@ -1,4 +1,4 @@
-﻿using MediatR;
+﻿     using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using RealEstateApp.Core.Application.Interfaces.Services;
 using RealEstateApp.Core.Application.Services;

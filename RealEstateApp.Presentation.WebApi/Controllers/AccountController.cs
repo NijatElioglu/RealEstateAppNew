@@ -62,7 +62,7 @@ namespace RealEstateApp.Presentation.WebApi.Controllers
             }
         }
         [HttpPost("RegisterBuyerUser")]
-        public async Task<IActionResult> RegisterBuyerUser(RegisterBuyerUserCommand command)
+        public async Task<IActionResult> RegisterBuyerUser([FromBody]RegisterBuyerUserCommand command)
         {
             try
             {
